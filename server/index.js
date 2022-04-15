@@ -1,12 +1,14 @@
 import path from "path"
 import fs from "fs"
-
+import {} from "dotenv/config"
 import React from "react"
 import ReactDOMServer from "react-dom/server"
 import express from "express"
 
 import App from "../src/App"
 import Login from "../src/Login"
+
+import models, { connectDb } from "../models/index"
 
 const PORT = process.env.PORT || 3006
 const app = express()
@@ -75,6 +77,16 @@ app.get("/login", (req, res) => {
 
 app.use(express.static("./build"))
 
-app.listen(PORT, () => {
-    console.log(`Server is listening on port ${PORT}`)
+const eraseDatabaseOnSync = true
+
+connectDb().then(async () => {
+    if (eraseDatabaseOnSync) {
+        await Promise.all([
+            models.User.deleteMany({}),
+            models.Project.deleteMany({}),
+        ])
+    }
+    app.listen(PORT, () => {
+        console.log(`Server is listening on port ${PORT}`)
+    })
 })
