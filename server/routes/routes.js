@@ -65,8 +65,8 @@ router.get("/login", (req, res) => {
                 </head>
                 <body>
                 <div id="root">${login}</div>
+                <script src="./logic/login.js"></script>
                 
-                <script>${counter}</script>
             </body>
             </html>`
         return res.send(html)
@@ -74,3 +74,6 @@ router.get("/login", (req, res) => {
 })
 
 export { router }
+{
+    /* <script>${counter}</script> */
+}

@@ -2,15 +2,14 @@ import mongoose from "mongoose"
 import "mongoose-type-email"
 import uuid from "node-uuid"
 import mailer from "../email/mailer"
-import { autoIncrement, connectDb } from "./index"
+import * as autoIncrement from "mongoose-auto-increment"
 import bcrypt from "bcrypt"
+
+const autoIncConnect = mongoose.createConnection(process.env.DATABASE_URL)
+
+autoIncrement.initialize(autoIncConnect)
 const userSchema = new mongoose.Schema(
     {
-        _id: {
-            type: Number,
-            alias: "id",
-            required: true,
-        },
         username: {
             type: String,
             unique: true,
@@ -69,10 +68,9 @@ async function hashPassword(password, saltRounds) {
 
     return newHash
 }
-userSchema.post("save", async function (newUser) {
-    const id = newUser.emailCode
-    mailer.verificationEmail(id, newUser.email)
-    return newUser
+userSchema.post("save", async function () {
+    mailer.verificationEmail(this.id, this.email)
+    return this
 })
 const User = mongoose.model("User", userSchema)
 
