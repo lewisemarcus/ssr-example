@@ -23,6 +23,6 @@ connectDb().then(async () => {
         ])
     }
     app.listen(PORT, () => {
-        console.log(`Server is listening on port ${PORT}`)
+        console.log(`Server is listening at http://localhost:${PORT}`)
     })
 })
