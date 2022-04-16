@@ -8,6 +8,7 @@ module.exports = {
     output: {
         path: path.resolve("server-build"),
         filename: "index.js",
+        globalObject: "this",
     },
     module: {
         rules: [

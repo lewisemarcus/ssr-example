@@ -43,36 +43,38 @@ router.get("/login", (req, res) => {
             console.error("Something went wrong:", err)
             return res.status(500).send("Oops, better luck next time!")
         }
+        const Counter = () => {
+            console.log("hi")
+            let number = parseInt(document.getElementById("button").textContent)
 
-        return res.send(
-            `<!DOCTYPE html>
-                <html lang="en">
-                    <head>
-                        <meta charset="utf-8" />
-                        <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-                        <meta name="viewport" content="width=device-width, initial-scale=1" />
-                        <meta name="theme-color" content="#000000" />
-                        <meta
-                            name="description"
-                            content="Web site created using create-react-app"
-                        />
-                        <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
-                
-                        <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-                        <script>
-                            window.__INITIAL__DATA__ = ${JSON.stringify({
-                                name,
-                            })}
-                        </script>
-                        <title>React App</title>
-                    </head>
-                    <body>
-                        <noscript>You need to enable JavaScript to run this app.</noscript>
-                        <div id="root">${login}</div>
-                    </body>
-                </html>
-                `,
-        )
+            number += 1
+
+            return (document.getElementById("button").textContent = number)
+        }
+
+        const head = data
+            .split("</head>")[0]
+            .split("<head>")[1]
+            .split("<script")[0]
+
+        const html = `
+            <!doctype html>
+                <html>
+                <head>
+                ${head}
+                <script>window.__INITIAL__DATA__ = ${JSON.stringify({
+                    name,
+                })}</script>
+                </head>
+                <body>
+                <div id="root">${login}</div>
+                <script>
+                document.getElementById("button").addEventListener("click", ${Counter})
+                </script> 
+            </body>
+            </html>`
+
+        return res.send(html)
     })
 })
 

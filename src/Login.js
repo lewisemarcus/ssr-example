@@ -1,4 +1,4 @@
-import React from "react"
+import React, { Fragment } from "react"
 
 // function Login(props) {
 //     return <h1>Goodbye {props.name}!</h1>
@@ -11,8 +11,16 @@ class Login extends React.Component {
             name: props.name,
         }
     }
+
     render() {
-        return <h1>Goodbye {this.state.name}!</h1>
+        return (
+            <Fragment>
+                <h1>Goodbye {this.state.name}!</h1>
+                <button id="button" type="button" className="btn btn-primary">
+                    1
+                </button>
+            </Fragment>
+        )
     }
 }
 
