@@ -13,11 +13,21 @@ import { router as api } from "./api/apiRoutes"
 
 const router = express.Router()
 
+const Context = React.createContext({})
+
 router.use("/api", api)
 
-router.get("/", (req, res) => {
-    const app = ReactDOMServer.renderToString(<App />)
+router.get("/", async (req, res) => {
+    const contextValue = { requests: [] }
+    const app = ReactDOMServer.renderToString(
+        <Context.Provider value={contextValue}>
+            <App />
+        </Context.Provider>,
+    )
     const indexFile = path.resolve("./build/index.html")
+
+    await Promise.all(contextValue.requests)
+    delete contextValue.requests
 
     fs.readFile(indexFile, "utf8", (err, data) => {
         if (err) {
@@ -33,11 +43,18 @@ router.get("/", (req, res) => {
         )
     })
 })
-router.get("/login", (req, res) => {
+router.get("/login", async (req, res) => {
+    const contextValue = { requests: [] }
     const name = "Marcus Lewis"
-    const login = ReactDOMServer.renderToString(<Login name={name} />)
+    const login = ReactDOMServer.renderToString(
+        <Context.Provider value={contextValue}>
+            <Login name={name} />
+        </Context.Provider>,
+    )
     const indexFile = path.resolve("./build/index.html")
 
+    await Promise.all(contextValue.requests)
+    delete contextValue.requests
     fs.readFile(indexFile, "utf8", (err, data) => {
         if (err) {
             console.error("Something went wrong:", err)
@@ -59,13 +76,9 @@ router.get("/login", (req, res) => {
                 <html>
                 <head>
                 ${head}
-                <script>window.__INITIAL__DATA__ = ${JSON.stringify({
-                    name,
-                })}</script>
                 </head>
                 <body>
                 <div id="root">${login}</div>
-                <script src="./logic/login.js"></script>
                 <script>${counter}</script>
             </body>
             </html>`

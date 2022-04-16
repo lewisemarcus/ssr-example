@@ -2,12 +2,8 @@ import mongoose from "mongoose"
 import "mongoose-type-email"
 import uuid from "node-uuid"
 import mailer from "../email/mailer"
-import * as autoIncrement from "mongoose-auto-increment"
 import bcrypt from "bcrypt"
 
-const autoIncConnect = mongoose.createConnection(process.env.DATABASE_URL)
-
-autoIncrement.initialize(autoIncConnect)
 const userSchema = new mongoose.Schema(
     {
         username: {
@@ -30,11 +26,10 @@ const userSchema = new mongoose.Schema(
             required: true,
             default: uuid.v4,
         },
+        projects: [{ type: mongoose.Schema.Types.ObjectId, ref: "Project" }],
     },
     { timestamps: true },
 )
-
-userSchema.plugin(autoIncrement.plugin, "User")
 
 userSchema.statics.findByLogin = async function (login) {
     let user = await this.findOne({

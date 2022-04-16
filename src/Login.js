@@ -1,12 +1,19 @@
-import React, { Fragment } from "react"
-
+import React, { Fragment, useEffect, useState } from "react"
 function Login(props) {
+    const [count, setCount] = useState(0)
+
+    useEffect(() => {
+        document.title = `You clicked ${count} times`
+    })
+
     return (
         <Fragment>
+            <p>You clicked {count} times</p>
             <h1>Goodbye {props.name}!</h1>
             <button id="button" type="button" className="btn btn-primary">
                 1
             </button>
+            <button onClick={() => setCount(count + 1)}>Click me</button>
         </Fragment>
     )
 }
