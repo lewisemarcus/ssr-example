@@ -9,13 +9,11 @@ import Login from "../../src/Login"
 
 import counterHandler from "../../logic/login"
 
-import { router as userRoutes } from "../routes/api/userRoutes"
-import { router as projectRoutes } from "../routes/api/projectRoutes"
+import { router as api } from "./api/apiRoutes"
 
 const router = express.Router()
 
-router.use("/user", userRoutes)
-router.use("/project", projectRoutes)
+router.use("/api", api)
 
 router.get("/", (req, res) => {
     const app = ReactDOMServer.renderToString(<App />)
