@@ -7,6 +7,8 @@ import express from "express"
 import App from "../../src/App"
 import Login from "../../src/Login"
 
+import counterHandler from "../../logic/login"
+
 import { router as userRoutes } from "../routes/api/userRoutes"
 import { router as projectRoutes } from "../routes/api/projectRoutes"
 
@@ -43,14 +45,11 @@ router.get("/login", (req, res) => {
             console.error("Something went wrong:", err)
             return res.status(500).send("Oops, better luck next time!")
         }
-        const Counter = () => {
-            console.log("hi")
-            let number = parseInt(document.getElementById("button").textContent)
 
-            number += 1
-
-            return (document.getElementById("button").textContent = number)
-        }
+        const counter = counterHandler
+            .toString()
+            .split("function counterHandler() {")[1]
+            .split(";\n}")[0]
 
         const head = data
             .split("</head>")[0]
@@ -68,12 +67,10 @@ router.get("/login", (req, res) => {
                 </head>
                 <body>
                 <div id="root">${login}</div>
-                <script>
-                document.getElementById("button").addEventListener("click", ${Counter})
-                </script> 
+                
+                <script>${counter}</script>
             </body>
             </html>`
-
         return res.send(html)
     })
 })

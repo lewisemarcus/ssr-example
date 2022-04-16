@@ -1,11 +1,11 @@
-document.getElementById("button").addEventListener("click", Counter)
+function counterHandler() {
+    document.getElementById("button").addEventListener("click", () => {
+        let number = parseInt(document.getElementById("button").textContent)
 
-const Counter = () => {
-    let number = parseInt(document.getElementById("button").textContent)
+        number += 1
 
-    number += 1
-
-    return (document.getElementById("button").textContent = number)
+        return (document.getElementById("button").textContent = number)
+    })
 }
 
-export default Counter
+export default counterHandler
