@@ -64,9 +64,9 @@ const MultipleRoutes = () => (
 
         <hr />
         <Routes>
-            <Route exact path="/with-react-router" component={Home} />
-            <Route path="/with-react-router/about" component={About} />
-            <Route path="/with-react-router/topics" component={Topics} />
+            <Route exact path="/with-react-router" element={Home} />
+            <Route path="/with-react-router/about" element={About} />
+            <Route path="/with-react-router/topics" element={Topics} />
         </Routes>
     </div>
 )
