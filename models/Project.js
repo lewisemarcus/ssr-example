@@ -13,4 +13,6 @@ const projectSchema = new mongoose.Schema(
 
 const Project = mongoose.model("Message", projectSchema)
 
+export { projectSchema }
+
 export default Project

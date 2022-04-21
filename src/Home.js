@@ -6,7 +6,12 @@ import React from "react"
 
 class Home extends React.Component {
     render() {
-        return <h1>Hello Sammy!</h1>
+        return (
+            <React.Fragment>
+                <h1>Hello Sammy!</h1>
+                <a href="/with-react-router">with React Router</a>
+            </React.Fragment>
+        )
     }
 }
 

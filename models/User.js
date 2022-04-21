@@ -3,7 +3,7 @@ import "mongoose-type-email"
 import uuid from "node-uuid"
 import mailer from "../email/mailer"
 import bcrypt from "bcrypt"
-
+import { projectSchema } from "./Project"
 const userSchema = new mongoose.Schema(
     {
         username: {
@@ -26,7 +26,7 @@ const userSchema = new mongoose.Schema(
             required: true,
             default: uuid.v4,
         },
-        projects: [{ type: mongoose.Schema.Types.ObjectId, ref: "Project" }],
+        projects: [projectSchema],
     },
     { timestamps: true },
 )
